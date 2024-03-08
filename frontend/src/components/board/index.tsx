@@ -20,7 +20,7 @@ function Board({ description, date, backgroundUrl }: Props) {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat"
             } : {}}
-            className={cn("h-full flex justify-center items-center")}
+            className={cn("h-full w-full flex justify-center items-center")}
         >
             <div className={cn("text-center", backgroundUrl ? "bg-card/75 p-6 rounded-lg" : null)}>
                 <h1>It has been</h1>
