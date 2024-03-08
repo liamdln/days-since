@@ -1,9 +1,14 @@
-import React from 'react'
+import { cn } from "@/lib/utils"
 
-function Counter() {
+type Props = {
+    value: string
+    className?: string
+}
+
+function Counter({ value, className }: Props) {
   return (
-    <div className="font-digi">
-        0
+    <div className="py-1 bg-[black] w-full">
+        <span className={cn(className, "font-digi text-destructive")}>{ value }</span>
     </div>
   )
 }
