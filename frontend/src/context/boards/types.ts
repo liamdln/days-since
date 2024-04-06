@@ -1,14 +1,16 @@
 export type Board = {
     uuid: string;
     description: string;
-    backgroundUrl: string;
+    backgroundUrl?: string;
     date: string;
 }
 
 export type BoardContext = {
     boards: Board[];
-    getBoards: () => Promise<Board[]>;
+    deleteBoard: (id: string) => void;
+    fetchBoards: () => Promise<Board[]>;
     setBoards: (boards: Board[]) => Promise<void>;
+    editBoard: (editedBoard: Board) => void;
 }
 
 export type Props = {

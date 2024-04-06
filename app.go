@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"os"
 )
 
@@ -28,11 +29,6 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// // Greet returns a greeting for the given name
-// func (a *App) Greet(name string) string {
-// 	return fmt.Sprintf("Hello %s, It's show time!", name)
-// }
-
 func (a *App) GetAllBoards() (string, error) {
 
 	content, err := os.ReadFile("./boards.json")
@@ -44,4 +40,32 @@ func (a *App) GetAllBoards() (string, error) {
 
 	return contentStr, nil
 
+}
+
+func (a *App) WriteBoard(boards []Board) (bool, error) {
+
+	// inBoards, err := a.GetAllBoards()
+	// if err != nil {
+	// 	return false, err
+	// }
+
+	// newBoards := []Board{}
+	// err = json.Unmarshal([]byte(inBoards), &newBoards)
+	// if err != nil {
+	// 	return false, err
+	// }
+
+	// newBoards = append(newBoards, board)
+
+	newBoards, err := json.Marshal(boards)
+	if err != nil {
+		return false, err
+	}
+
+	err = os.WriteFile("./boards.json", newBoards, 0644)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

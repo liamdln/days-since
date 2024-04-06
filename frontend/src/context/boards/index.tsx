@@ -1,12 +1,14 @@
 import { createContext, useEffect, useState } from 'react'
 import { Board, BoardContext as BoardContextType, Props } from "./types"
 import { toast } from "@/components/ui/use-toast"
-import { getBoardsFromServer } from "./utils"
+import { getBoardsFromServer, writeBoardsToServer } from "./utils"
 
 const initialContext: BoardContextType = {
     boards: [],
-    getBoards: () => new Promise(() => null),
-    setBoards: () => new Promise(() => null)
+    deleteBoard: () => null,
+    fetchBoards: () => new Promise(() => null),
+    setBoards: () => new Promise(() => null),
+    editBoard: () => null
 }
 
 export const BoardContext = createContext(initialContext)
@@ -16,16 +18,16 @@ function BoardProvider({ children }: Props) {
     const [boards, setBoards] = useState<Board[]>([])
 
     useEffect(() => {
-        getBoards()
+        fetchBoards()
             .then((res) => setBoards(res))
     }, [])
 
-    const getBoards = async () => {
+    const fetchBoards = async () => {
 
         try {
-            const boards = await getBoardsFromServer()
-            setBoards(boards)
-            return boards
+            const boardsFromServer = await getBoardsFromServer()
+            setBoards(boardsFromServer)
+            return boardsFromServer
         } catch (e) {
             console.error(e)
             toast({
@@ -37,19 +39,37 @@ function BoardProvider({ children }: Props) {
         }
     }
 
-    const writeBoards = async (boards: Board[]) => {
+    const deleteBoard = (boardId: string) => {
+        setBoards(old => old.filter(board => board.uuid !== boardId))
+    }
 
+    const writeBoards = async (boards: Board[]) => {
+        setBoards(boards)
+        writeBoardsToServer(boards)
+    }
+
+    const editBoard = (editedBoard: Board) => {
+        const boardIndex = boards.findIndex(board => board.uuid === editedBoard.uuid)
+        setBoards(old => {
+            const front = old.slice(0, boardIndex)
+            const back = old.slice(boardIndex + 1, old.length)
+            const newArr = front.concat([editedBoard] ,back)
+            writeBoards(newArr)
+            return newArr;
+        })
     }
 
     return (
         <BoardContext.Provider value={{
             boards: boards,
-            getBoards: getBoards,
-            setBoards: writeBoards
+            deleteBoard: deleteBoard,
+            fetchBoards: fetchBoards,
+            setBoards: writeBoards,
+            editBoard: editBoard
         }}>
-            { children }
+            {children}
         </BoardContext.Provider>
-  )
+    )
 }
 
 export default BoardProvider

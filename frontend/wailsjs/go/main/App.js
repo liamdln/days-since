@@ -5,3 +5,7 @@
 export function GetAllBoards() {
   return window['go']['main']['App']['GetAllBoards']();
 }
+
+export function WriteBoard(arg1) {
+  return window['go']['main']['App']['WriteBoard'](arg1);
+}

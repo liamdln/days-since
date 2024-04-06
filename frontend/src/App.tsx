@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import MainLayout from "./layout/main"
-import { Board as BoardType } from "./context/boards/types"
 import BoardProvider from "./context/boards"
 
 function App() {
