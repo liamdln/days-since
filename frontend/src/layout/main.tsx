@@ -24,7 +24,7 @@ function MainLayout() {
                         boardContext.boards.map((board, index) => (
                             <div className={cn(index === 2 && boardContext.boards.length % 2 === 1 ? "col-span-2" : "")}>
                                 <Board
-                                    key={board.uuid}
+                                    key={index}
                                     description={board.description}
                                     backgroundUrl={board.backgroundUrl}
                                     date={moment(board.date)}

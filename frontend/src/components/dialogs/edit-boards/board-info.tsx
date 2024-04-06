@@ -46,7 +46,7 @@ function BoardInfo({ open, setOpen, board }: Props) {
     })
 
     const onSubmit = (values: z.infer<typeof schema>) => {
-        if (boardContext.boards.length >= 4) return;
+        if (boardContext.boards.length >= 4 && !board?.uuid) return;
         const newBoard: Board = {
             uuid: board?.uuid ?? uuidv4(),
             description: values.description,
