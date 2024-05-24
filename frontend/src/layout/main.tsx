@@ -2,7 +2,7 @@ import EditBoards from "@/components/dialogs/edit-boards"
 import { Button } from "@/components/ui/button"
 import { BoardContext } from "@/context/boards"
 import { Edit } from "lucide-react"
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import NoBoards from "@/components/no-boards"
 import Board from "@/components/board"
 import moment from "moment"

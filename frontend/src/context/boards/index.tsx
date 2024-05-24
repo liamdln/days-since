@@ -40,12 +40,17 @@ function BoardProvider({ children }: Props) {
     }
 
     const deleteBoard = (boardId: string) => {
-        setBoards(old => old.filter(board => board.uuid !== boardId))
+        setBoards(old => {
+            const filtered = old.filter(board => board.uuid !== boardId)
+            console.log(filtered)
+            writeBoards(filtered, true)
+            return filtered
+        })
     }
 
-    const writeBoards = async (boards: Board[]) => {
-        setBoards(boards)
-        writeBoardsToServer(boards)
+    const writeBoards = async (newBoards: Board[], skipStateChange: boolean = false) => {
+        if (!skipStateChange) setBoards(newBoards)
+        writeBoardsToServer(newBoards)
     }
 
     const editBoard = (editedBoard: Board) => {
@@ -53,8 +58,8 @@ function BoardProvider({ children }: Props) {
         setBoards(old => {
             const front = old.slice(0, boardIndex)
             const back = old.slice(boardIndex + 1, old.length)
-            const newArr = front.concat([editedBoard] ,back)
-            writeBoards(newArr)
+            const newArr = front.concat([editedBoard], back)
+            writeBoards(newArr, true)
             return newArr;
         })
     }

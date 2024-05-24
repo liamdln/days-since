@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
 import Counter from "./counter"
 import { cn } from "@/lib/utils";
 import moment from "moment"
-import { Button } from "../ui/button";
-import { BoardContext } from "@/context/boards";
+import { useEffect, useState } from "react";
+import useInterval from "use-interval"
 
 type Props = {
     date: moment.Moment;
@@ -14,7 +13,19 @@ type Props = {
 
 function Board({ description, date, backgroundUrl, className }: Props) {
 
-    const days = moment().diff(date, "days")
+    const [days, setDays] = useState(moment().diff(date, "days"))
+
+    useInterval(() => {
+        setDateDiff()
+    }, 60000, true)
+
+    useEffect(() => {
+        setDateDiff()
+    }, [date])
+
+    const setDateDiff = () => {
+        setDays(moment().diff(date, "days"))
+    }
 
     return (
         <div style={
@@ -25,12 +36,12 @@ function Board({ description, date, backgroundUrl, className }: Props) {
             } : {}}
             className={cn("h-full w-full flex justify-center items-center rounded-md", className)}
         >
-            <div className={cn("text-center", backgroundUrl ? "bg-card/75 p-6 rounded-lg" : null)}>
+            <div className={cn("text-center text-3xl min-w-72", backgroundUrl ? "bg-card/75 p-6 rounded-lg" : null)}>
                 <h1>It has been</h1>
                 <div className="flex justify-center my-1">
-                    <Counter value={`${days}`} className="text-5xl" />
+                    <Counter value={`${days}`} className="text-9xl" />
                 </div>
-                <p className="flex flex-wrap">{days === 1 ? <>day</> : <>days</>} since {description}</p>
+                <p className="flex flex-wrap justify-center">{days === 1 ? <>day</> : <>days</>} since {description}</p>
             </div>
         </div>
     )

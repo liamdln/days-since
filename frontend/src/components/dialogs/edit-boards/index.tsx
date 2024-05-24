@@ -18,11 +18,6 @@ function EditBoards({ open, setOpen }: Props) {
     const boardContext = useContext(BoardContext)
     const [boardInfoOpen, setBoardInfoOpen] = useState(false)
     const [selectedBoard, setSelectedBoard] = useState<Board | null>(null)
-    const [boards, setBoards] = useState<Board[]>(boardContext.boards)
-
-    useEffect(() => {
-        setBoards(boardContext.boards)
-    }, [boardContext.boards])
     
     const openBoardInfo = (board?: Board) => {
         setSelectedBoard(board?.uuid ? board : null)
@@ -60,7 +55,7 @@ function EditBoards({ open, setOpen }: Props) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {boards.map(board => (
+                                {boardContext.boards.map(board => (
                                     <TableRow key={board.uuid}>
                                         <TableCell className="max-w-[100px]">{board.uuid}</TableCell>
                                         <TableCell className="max-w-[300px] overflow-x-scroll">{board.description}</TableCell>
