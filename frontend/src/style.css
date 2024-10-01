@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 280 7% 8%;
+        --foreground: 300 9% 98%;
+
+        --card: 280 6% 10%;
+        --card-foreground: 300 9% 98%;
+
+        --popover: 280 6% 10%;
+        --popover-foreground: 300 9% 98%;
+
+        --primary: 284 80% 44%;
+        --primary-foreground: 300 9% 98%;
+
+        --secondary: 285 8% 19%;
+        --secondary-foreground: 300 9% 98%;
+
+        --muted: 284 7% 29%;
+        --muted-foreground: 285 8% 49%;
+
+        --accent: 284 71% 19%;
+        --accent-foreground: 300 9% 98%;
+
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+
+        --border: 288 8% 12%;
+        --input: 285 9% 18%;
+        --ring: 284 80% 40%;
+
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+
+    @font-face {
+        font-family: "Poppins";
+        src: url("./assets/fonts/poppins.woff2") format("woff2"),
+             url("./assets/fonts/poppins.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "Digi";
+        src: url("./assets/fonts/digi.woff2") format("woff2"),
+             url("./assets/fonts/digi.woff") format("woff");
+    }
+
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
